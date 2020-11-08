@@ -1,0 +1,34 @@
+# 数据库连接设置
+spring:
+  datasource:
+    url: jdbc:postgresql://lochost:5432/postgres
+    username: Administrator
+    password: rainbow
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: update
+
+
+# 设置全局日期格式,如果设置这个格式,则代码中@DateTimeFormat(pattern = "dd/MM/yyyy") 无效!!
+  mvc:
+    format:
+      date: yyyy-MM-dd
+server:
+  port: 8585
+  servlet:
+    encoding:
+      charset: utf-8
+
+
+
+# Mybatis 配置
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/*.xml,classpath:/mybatis/mapper/extend/*.xml
+
+logging:
+  level:
+    com.feitian.forum.mapper: debug
