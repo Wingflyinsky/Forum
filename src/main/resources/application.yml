@@ -2,8 +2,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://lochost:5432/postgres
-    username: Administrator
-    password: rainbow
+    username: Forum
+    password:
     driver-class-name: org.postgresql.Driver
   jpa:
     properties:
