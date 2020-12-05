@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>论坛</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<ul class="layui-nav" lay-filter="topNav">
+    <li class="layui-nav-item"><a href="">
+        论坛首页</a>
+    </li>
+
+    <li class="layui-nav-item" style="width: fit-content;float: right">
+        <a id="userBox" href="javascript:;">我</a>
+        <dl class="layui-nav-child" >
+            <!-- 如果添加点击事件，记得去掉href属性 -->
+            <dd><a id="child-profile" href="">个人信息</a></dd>
+            <dd><a id="child-topic" href="">我的话题</a></dd>
+            <dd><a id="child-comment" href="">我的评论</a></dd>
+            <dd><a id="child-logout" href="javascript:logout()">退出登录</a></dd>
+        </dl>
+    </li>
+
+    <li class="layui-nav-item" style="float: right">
+        <a href="">注册</a>
+    </li>
+
+    <li class="layui-nav-item" style="float: right">
+        <a href="">登录</a>
+    </li>
+</ul>
+
+<script src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use('element', function(){
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+        <!-- 监听导航栏的点击操作 -->
+        /*element.on('nav(topNav)', function(elem){
+            <!-- 输出被点击的DOM元素，这个元素以数组的形式表示，数组首元素的id便是被点击的元素名 -->
+            console.log(elem);
+            <!-- 监听退出登录的点击操作 -->
+            if( elem[0].id == "child-logout" ){
+                layui.use('layer',function () {
+                    var layer = layui.layer
+                    layer.confirm('确认退出登录吗?', {icon: 3, title:'退出登录'}, function(index){
+                        layer.close(index);
+                        $(window).location.href.link('/logout');
+                    });
+                })
+            }
+
+        });*/
+    });
+
+    function logout(){
+        layui.use('layer',function () {
+            var layer = layui.layer
+            layer.confirm('确认退出登录吗?', {icon: 3, title:'退出登录'}, function(index){
+                layer.close(index);
+                window.location.href = '/logout';
+            });
+        })
+
+    }
+
+    $.ajax({
+        type:"POST",
+        url:"/getUsername",
+        datatype:"json",
+        success:function (res) {
+            document.getElementById("userBox").innerText=res
+        }
+
+        }
+    )
+</script>
+
+</body>
+</html>

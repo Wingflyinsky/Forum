@@ -7,8 +7,8 @@
       <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="first-sent" javaType="java.util.Date" jdbcType="TIME" />
-      <arg column="last-modified" javaType="java.util.Date" jdbcType="TIME" />
+      <arg column="first-sent" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="last-modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="is_deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
       <arg column="pin_level" javaType="java.lang.Short" jdbcType="SMALLINT" />
     </constructor>
@@ -109,8 +109,8 @@
     insert into "Topic" ("topic_id", "user_id", "title", 
       "content", "first-sent", "last-modified", 
       "is_deleted", "pin_level")
-    values (#{topicId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{firstSent,jdbcType=TIME}, #{lastModified,jdbcType=TIME}, 
+    values (DEFAULT, #{userId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR},
+      #{content,jdbcType=VARCHAR}, #{firstSent,jdbcType=TIMESTAMP}, #{lastModified,jdbcType=TIMESTAMP}, 
       #{isDeleted,jdbcType=BIT}, #{pinLevel,jdbcType=SMALLINT})
   </insert>
   <insert id="insertSelective" parameterType="com.feitian.forum.domain.Topic">
@@ -155,10 +155,10 @@
         #{content,jdbcType=VARCHAR},
       </if>
       <if test="firstSent != null">
-        #{firstSent,jdbcType=TIME},
+        #{firstSent,jdbcType=TIMESTAMP},
       </if>
       <if test="lastModified != null">
-        #{lastModified,jdbcType=TIME},
+        #{lastModified,jdbcType=TIMESTAMP},
       </if>
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=BIT},
@@ -190,10 +190,10 @@
         "content" = #{record.content,jdbcType=VARCHAR},
       </if>
       <if test="record.firstSent != null">
-        "first-sent" = #{record.firstSent,jdbcType=TIME},
+        "first-sent" = #{record.firstSent,jdbcType=TIMESTAMP},
       </if>
       <if test="record.lastModified != null">
-        "last-modified" = #{record.lastModified,jdbcType=TIME},
+        "last-modified" = #{record.lastModified,jdbcType=TIMESTAMP},
       </if>
       <if test="record.isDeleted != null">
         "is_deleted" = #{record.isDeleted,jdbcType=BIT},
@@ -212,8 +212,8 @@
       "user_id" = #{record.userId,jdbcType=BIGINT},
       "title" = #{record.title,jdbcType=VARCHAR},
       "content" = #{record.content,jdbcType=VARCHAR},
-      "first-sent" = #{record.firstSent,jdbcType=TIME},
-      "last-modified" = #{record.lastModified,jdbcType=TIME},
+      "first-sent" = #{record.firstSent,jdbcType=TIMESTAMP},
+      "last-modified" = #{record.lastModified,jdbcType=TIMESTAMP},
       "is_deleted" = #{record.isDeleted,jdbcType=BIT},
       "pin_level" = #{record.pinLevel,jdbcType=SMALLINT}
     <if test="_parameter != null">
@@ -233,10 +233,10 @@
         "content" = #{content,jdbcType=VARCHAR},
       </if>
       <if test="firstSent != null">
-        "first-sent" = #{firstSent,jdbcType=TIME},
+        "first-sent" = #{firstSent,jdbcType=TIMESTAMP},
       </if>
       <if test="lastModified != null">
-        "last-modified" = #{lastModified,jdbcType=TIME},
+        "last-modified" = #{lastModified,jdbcType=TIMESTAMP},
       </if>
       <if test="isDeleted != null">
         "is_deleted" = #{isDeleted,jdbcType=BIT},
@@ -252,8 +252,8 @@
     set "user_id" = #{userId,jdbcType=BIGINT},
       "title" = #{title,jdbcType=VARCHAR},
       "content" = #{content,jdbcType=VARCHAR},
-      "first-sent" = #{firstSent,jdbcType=TIME},
-      "last-modified" = #{lastModified,jdbcType=TIME},
+      "first-sent" = #{firstSent,jdbcType=TIMESTAMP},
+      "last-modified" = #{lastModified,jdbcType=TIMESTAMP},
       "is_deleted" = #{isDeleted,jdbcType=BIT},
       "pin_level" = #{pinLevel,jdbcType=SMALLINT}
     where "topic_id" = #{topicId,jdbcType=BIGINT}

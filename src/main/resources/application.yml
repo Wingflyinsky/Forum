@@ -1,7 +1,7 @@
 # 数据库连接设置
 spring:
   datasource:
-    url: jdbc:postgresql://lochost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/Forum
     username: Forum
     password:
     driver-class-name: org.postgresql.Driver

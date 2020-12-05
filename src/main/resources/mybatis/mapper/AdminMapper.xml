@@ -100,7 +100,7 @@
   </delete>
   <insert id="insert" parameterType="com.feitian.forum.domain.Admin">
     insert into "Admin" ("admin_id", "user_id")
-    values (#{adminId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT})
+    values (DEFAULT, #{userId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.feitian.forum.domain.Admin">
     insert into "Admin"

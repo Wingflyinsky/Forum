@@ -2,7 +2,6 @@ package com.feitian.forum.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class TopicExample {
@@ -104,32 +103,6 @@ public class TopicExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCTime(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Time(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCTime(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Time> timeList = new ArrayList<>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                timeList.add(new java.sql.Time(iter.next().getTime()));
-            }
-            addCriterion(condition, timeList, property);
-        }
-
-        protected void addCriterionForJDBCTime(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Time(value1.getTime()), new java.sql.Time(value2.getTime()), property);
         }
 
         public Criteria andTopicIdIsNull() {
@@ -403,52 +376,52 @@ public class TopicExample {
         }
 
         public Criteria andFirstSentEqualTo(Date value) {
-            addCriterionForJDBCTime("\"first-sent\" =", value, "firstSent");
+            addCriterion("\"first-sent\" =", value, "firstSent");
             return (Criteria) this;
         }
 
         public Criteria andFirstSentNotEqualTo(Date value) {
-            addCriterionForJDBCTime("\"first-sent\" <>", value, "firstSent");
+            addCriterion("\"first-sent\" <>", value, "firstSent");
             return (Criteria) this;
         }
 
         public Criteria andFirstSentGreaterThan(Date value) {
-            addCriterionForJDBCTime("\"first-sent\" >", value, "firstSent");
+            addCriterion("\"first-sent\" >", value, "firstSent");
             return (Criteria) this;
         }
 
         public Criteria andFirstSentGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCTime("\"first-sent\" >=", value, "firstSent");
+            addCriterion("\"first-sent\" >=", value, "firstSent");
             return (Criteria) this;
         }
 
         public Criteria andFirstSentLessThan(Date value) {
-            addCriterionForJDBCTime("\"first-sent\" <", value, "firstSent");
+            addCriterion("\"first-sent\" <", value, "firstSent");
             return (Criteria) this;
         }
 
         public Criteria andFirstSentLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCTime("\"first-sent\" <=", value, "firstSent");
+            addCriterion("\"first-sent\" <=", value, "firstSent");
             return (Criteria) this;
         }
 
         public Criteria andFirstSentIn(List<Date> values) {
-            addCriterionForJDBCTime("\"first-sent\" in", values, "firstSent");
+            addCriterion("\"first-sent\" in", values, "firstSent");
             return (Criteria) this;
         }
 
         public Criteria andFirstSentNotIn(List<Date> values) {
-            addCriterionForJDBCTime("\"first-sent\" not in", values, "firstSent");
+            addCriterion("\"first-sent\" not in", values, "firstSent");
             return (Criteria) this;
         }
 
         public Criteria andFirstSentBetween(Date value1, Date value2) {
-            addCriterionForJDBCTime("\"first-sent\" between", value1, value2, "firstSent");
+            addCriterion("\"first-sent\" between", value1, value2, "firstSent");
             return (Criteria) this;
         }
 
         public Criteria andFirstSentNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCTime("\"first-sent\" not between", value1, value2, "firstSent");
+            addCriterion("\"first-sent\" not between", value1, value2, "firstSent");
             return (Criteria) this;
         }
 
@@ -463,52 +436,52 @@ public class TopicExample {
         }
 
         public Criteria andLastModifiedEqualTo(Date value) {
-            addCriterionForJDBCTime("\"last-modified\" =", value, "lastModified");
+            addCriterion("\"last-modified\" =", value, "lastModified");
             return (Criteria) this;
         }
 
         public Criteria andLastModifiedNotEqualTo(Date value) {
-            addCriterionForJDBCTime("\"last-modified\" <>", value, "lastModified");
+            addCriterion("\"last-modified\" <>", value, "lastModified");
             return (Criteria) this;
         }
 
         public Criteria andLastModifiedGreaterThan(Date value) {
-            addCriterionForJDBCTime("\"last-modified\" >", value, "lastModified");
+            addCriterion("\"last-modified\" >", value, "lastModified");
             return (Criteria) this;
         }
 
         public Criteria andLastModifiedGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCTime("\"last-modified\" >=", value, "lastModified");
+            addCriterion("\"last-modified\" >=", value, "lastModified");
             return (Criteria) this;
         }
 
         public Criteria andLastModifiedLessThan(Date value) {
-            addCriterionForJDBCTime("\"last-modified\" <", value, "lastModified");
+            addCriterion("\"last-modified\" <", value, "lastModified");
             return (Criteria) this;
         }
 
         public Criteria andLastModifiedLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCTime("\"last-modified\" <=", value, "lastModified");
+            addCriterion("\"last-modified\" <=", value, "lastModified");
             return (Criteria) this;
         }
 
         public Criteria andLastModifiedIn(List<Date> values) {
-            addCriterionForJDBCTime("\"last-modified\" in", values, "lastModified");
+            addCriterion("\"last-modified\" in", values, "lastModified");
             return (Criteria) this;
         }
 
         public Criteria andLastModifiedNotIn(List<Date> values) {
-            addCriterionForJDBCTime("\"last-modified\" not in", values, "lastModified");
+            addCriterion("\"last-modified\" not in", values, "lastModified");
             return (Criteria) this;
         }
 
         public Criteria andLastModifiedBetween(Date value1, Date value2) {
-            addCriterionForJDBCTime("\"last-modified\" between", value1, value2, "lastModified");
+            addCriterion("\"last-modified\" between", value1, value2, "lastModified");
             return (Criteria) this;
         }
 
         public Criteria andLastModifiedNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCTime("\"last-modified\" not between", value1, value2, "lastModified");
+            addCriterion("\"last-modified\" not between", value1, value2, "lastModified");
             return (Criteria) this;
         }
 

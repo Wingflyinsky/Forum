@@ -105,7 +105,7 @@
   <insert id="insert" parameterType="com.feitian.forum.domain.User">
     insert into "User" ("user_id", "username", "password", 
       "gender", "email", "if_banned")
-    values (#{userId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (DEFAULT, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{gender,jdbcType=CHAR}, #{email,jdbcType=VARCHAR}, #{ifBanned,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.feitian.forum.domain.User">

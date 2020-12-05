@@ -9,7 +9,7 @@ public class Comment {
 
     private Long userId;
 
-    private Object content;
+    private String content;
 
     private Long floor;
 
@@ -19,7 +19,7 @@ public class Comment {
 
     private Boolean isDeleted;
 
-    public Comment(Long commentId, Long topicId, Long userId, Object content, Long floor, Date firstSent, Date lastModified, Boolean isDeleted) {
+    public Comment(Long commentId, Long topicId, Long userId, String content, Long floor, Date firstSent, Date lastModified, Boolean isDeleted) {
         this.commentId = commentId;
         this.topicId = topicId;
         this.userId = userId;
@@ -58,12 +58,12 @@ public class Comment {
         this.userId = userId;
     }
 
-    public Object getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(Object content) {
-        this.content = content;
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 
     public Long getFloor() {

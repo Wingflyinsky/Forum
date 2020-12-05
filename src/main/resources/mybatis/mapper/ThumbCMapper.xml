@@ -102,7 +102,7 @@
   <insert id="insert" parameterType="com.feitian.forum.domain.ThumbC">
     insert into "ThumbC" ("thumbC_id", "comment_id", "user_id"
       )
-    values (#{thumbcId,jdbcType=BIGINT}, #{commentId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}
+    values (DEFAULT, #{commentId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.feitian.forum.domain.ThumbC">

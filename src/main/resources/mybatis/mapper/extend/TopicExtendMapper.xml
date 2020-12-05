@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feitian.forum.mapper.TopicMapper">
+    <resultMap id="TopicExtendMap" type="com.feitian.forum.domain.Topic" extends="BaseResultMap">
+        <collection property="Comments" ofType="com.feitian.forum.domain.Comment">
+
+        </collection>
+
+    </resultMap >
+
+    <select id="getComments" resultMap="TopicExtendMap">
+        select *
+        from public."Comment"
+        where public."Comment".topic_id = #{topicId};
+    </select>
+
+    <select id="getThumbTs" resultMap="TopicExtendMap">
+        select count(*)
+        from public."ThumbT"
+        where public."ThumbT".topic_id =#{topicId};
+    </select>
+</mapper>

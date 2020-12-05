@@ -6,7 +6,7 @@
       <idArg column="comment_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="topic_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="content" javaType="java.lang.Object" jdbcType="ARRAY" />
+      <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="floor" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="first-sent" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="last-modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -109,8 +109,8 @@
     insert into "Comment" ("comment_id", "topic_id", "user_id", 
       "content", "floor", "first-sent", 
       "last-modified", "is_deleted")
-    values (#{commentId,jdbcType=BIGINT}, #{topicId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
-      #{content,jdbcType=ARRAY}, #{floor,jdbcType=BIGINT}, #{firstSent,jdbcType=TIMESTAMP}, 
+    values (DEFAULT, #{topicId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
+      #{content,jdbcType=VARCHAR}, #{floor,jdbcType=BIGINT}, #{firstSent,jdbcType=TIMESTAMP}, 
       #{lastModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.feitian.forum.domain.Comment">
@@ -152,7 +152,7 @@
         #{userId,jdbcType=BIGINT},
       </if>
       <if test="content != null">
-        #{content,jdbcType=ARRAY},
+        #{content,jdbcType=VARCHAR},
       </if>
       <if test="floor != null">
         #{floor,jdbcType=BIGINT},
@@ -187,7 +187,7 @@
         "user_id" = #{record.userId,jdbcType=BIGINT},
       </if>
       <if test="record.content != null">
-        "content" = #{record.content,jdbcType=ARRAY},
+        "content" = #{record.content,jdbcType=VARCHAR},
       </if>
       <if test="record.floor != null">
         "floor" = #{record.floor,jdbcType=BIGINT},
@@ -211,7 +211,7 @@
     set "comment_id" = #{record.commentId,jdbcType=BIGINT},
       "topic_id" = #{record.topicId,jdbcType=BIGINT},
       "user_id" = #{record.userId,jdbcType=BIGINT},
-      "content" = #{record.content,jdbcType=ARRAY},
+      "content" = #{record.content,jdbcType=VARCHAR},
       "floor" = #{record.floor,jdbcType=BIGINT},
       "first-sent" = #{record.firstSent,jdbcType=TIMESTAMP},
       "last-modified" = #{record.lastModified,jdbcType=TIMESTAMP},
@@ -230,7 +230,7 @@
         "user_id" = #{userId,jdbcType=BIGINT},
       </if>
       <if test="content != null">
-        "content" = #{content,jdbcType=ARRAY},
+        "content" = #{content,jdbcType=VARCHAR},
       </if>
       <if test="floor != null">
         "floor" = #{floor,jdbcType=BIGINT},
@@ -251,7 +251,7 @@
     update "Comment"
     set "topic_id" = #{topicId,jdbcType=BIGINT},
       "user_id" = #{userId,jdbcType=BIGINT},
-      "content" = #{content,jdbcType=ARRAY},
+      "content" = #{content,jdbcType=VARCHAR},
       "floor" = #{floor,jdbcType=BIGINT},
       "first-sent" = #{firstSent,jdbcType=TIMESTAMP},
       "last-modified" = #{lastModified,jdbcType=TIMESTAMP},

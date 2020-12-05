@@ -3,9 +3,11 @@ package com.feitian.forum.mapper;
 import com.feitian.forum.domain.Topic;
 import com.feitian.forum.domain.TopicExample;
 import java.util.List;
+
+import com.feitian.forum.mapper.extend.TopicExtendMapper;
 import org.apache.ibatis.annotations.Param;
 
-public interface TopicMapper {
+public interface TopicMapper extends TopicExtendMapper {
     long countByExample(TopicExample example);
 
     int deleteByExample(TopicExample example);

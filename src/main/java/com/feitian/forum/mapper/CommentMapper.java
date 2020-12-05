@@ -3,9 +3,11 @@ package com.feitian.forum.mapper;
 import com.feitian.forum.domain.Comment;
 import com.feitian.forum.domain.CommentExample;
 import java.util.List;
+
+import com.feitian.forum.mapper.extend.CommentExtendMapper;
 import org.apache.ibatis.annotations.Param;
 
-public interface CommentMapper {
+public interface CommentMapper extends CommentExtendMapper {
     long countByExample(CommentExample example);
 
     int deleteByExample(CommentExample example);

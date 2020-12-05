@@ -102,7 +102,7 @@
   <insert id="insert" parameterType="com.feitian.forum.domain.ThumbT">
     insert into "ThumbT" ("thumbT_id", "topic_id", "user_id"
       )
-    values (#{thumbtId,jdbcType=BIGINT}, #{topicId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}
+    values (DEFAULT, #{topicId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.feitian.forum.domain.ThumbT">

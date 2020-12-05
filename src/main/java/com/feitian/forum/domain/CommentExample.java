@@ -295,52 +295,62 @@ public class CommentExample {
             return (Criteria) this;
         }
 
-        public Criteria andContentEqualTo(Object value) {
+        public Criteria andContentEqualTo(String value) {
             addCriterion("\"content\" =", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andContentNotEqualTo(Object value) {
+        public Criteria andContentNotEqualTo(String value) {
             addCriterion("\"content\" <>", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andContentGreaterThan(Object value) {
+        public Criteria andContentGreaterThan(String value) {
             addCriterion("\"content\" >", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andContentGreaterThanOrEqualTo(Object value) {
+        public Criteria andContentGreaterThanOrEqualTo(String value) {
             addCriterion("\"content\" >=", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andContentLessThan(Object value) {
+        public Criteria andContentLessThan(String value) {
             addCriterion("\"content\" <", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andContentLessThanOrEqualTo(Object value) {
+        public Criteria andContentLessThanOrEqualTo(String value) {
             addCriterion("\"content\" <=", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andContentIn(List<Object> values) {
+        public Criteria andContentLike(String value) {
+            addCriterion("\"content\" like", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNotLike(String value) {
+            addCriterion("\"content\" not like", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentIn(List<String> values) {
             addCriterion("\"content\" in", values, "content");
             return (Criteria) this;
         }
 
-        public Criteria andContentNotIn(List<Object> values) {
+        public Criteria andContentNotIn(List<String> values) {
             addCriterion("\"content\" not in", values, "content");
             return (Criteria) this;
         }
 
-        public Criteria andContentBetween(Object value1, Object value2) {
+        public Criteria andContentBetween(String value1, String value2) {
             addCriterion("\"content\" between", value1, value2, "content");
             return (Criteria) this;
         }
 
-        public Criteria andContentNotBetween(Object value1, Object value2) {
+        public Criteria andContentNotBetween(String value1, String value2) {
             addCriterion("\"content\" not between", value1, value2, "content");
             return (Criteria) this;
         }
