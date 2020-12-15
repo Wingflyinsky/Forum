@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feitian.forum.mapper.UserMapper">
+    <resultMap id="UserExtendMap" type="com.feitian.forum.domain.User" extends="BaseResultMap">
+        <collection property="myTopics" ofType="com.feitian.forum.domain.Topic">
+            <id column="topic_topic_id" jdbcType="BIGINT" property="topicId"/>
+            <result column="title"  jdbcType="VARCHAR" property="title"/>
+            <result column="topic_content"  jdbcType="VARCHAR" property="content"/>
+        </collection>
+        <collection property="myComments" ofType="com.feitian.forum.domain.Comment">
+            <id column="comment_id" jdbcType="BIGINT" property="commentId"/>
+            <result column="comment_topic_id"  jdbcType="VARCHAR" property="topicId"/>
+            <result column="comment_content"  jdbcType="VARCHAR" property="content"/>
+        </collection>
+    </resultMap>
+
+    <select id="getMyTopics" resultMap="UserExtendMap">
+        select public."Topic".topic_id as topic_topic_id,public."Topic".title as title,
+               public."Topic".content as topic_content
+        from public."Topic",public."User"
+        where public."Topic".is_deleted = false
+          and public."Topic".user_id=public."User".user_id
+          and public."User".user_id=#{userId};
+    </select>
+
+    <select id="getMyComments" resultMap="UserExtendMap">
+        select public."Comment".comment_id as comment_id,public."Comment".topic_id as comment_topic_id,
+               public."Comment".content as comment_content
+        from public."Comment",public."User"
+        where public."Comment".is_deleted = false
+          and public."Comment".user_id=public."User".user_id
+          and public."User".user_id=#{userId};
+    </select>
+</mapper>

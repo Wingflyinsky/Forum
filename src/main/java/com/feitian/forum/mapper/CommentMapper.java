@@ -6,7 +6,9 @@ import java.util.List;
 
 import com.feitian.forum.mapper.extend.CommentExtendMapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CommentMapper extends CommentExtendMapper {
     long countByExample(CommentExample example);
 

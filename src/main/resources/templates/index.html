@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>川流不息BBS-四川大学论坛</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="四川大学论坛，校园BBS">
+  <meta name="description" content="四川大学论坛，校园BBS">
+  <link rel="stylesheet" href="layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+  <link rel="stylesheet" href="css/global.css" th:href="@{/css/global.css}">
+</head>
+
+
+<body>
+
+<!--头部-->
+<div class="fly-header layui-bg-black">
+  <div class="layui-container">
+    <a class="fly-logo" href="/">
+      <img src="images/icon_wave.png" th:src="@{/images/icon_wave.png}" alt="layui"> <b style="font-size:28px">川流不息BBS </b>四川大学校园论坛
+    </a>
+    <ul class="layui-nav fly-nav layui-hide-xs" style="margin-left: 400px">
+      <li class="layui-nav-item"><a th:href="@{#}" target="_blank"><i class="iconfont icon-jiaoliu"></i>发起话题</a></li>
+      <li class="layui-nav-item"><a href="/index.html"><i class="iconfont icon-iconmingxinganli"></i>精华话题</a></li>
+      <li class="layui-nav-item"><a  th:href="@{http://www.scu.edu.cn/index.htm}" target="_blank"><i class="iconfont icon-ui"></i>川大官网</a></li>
+    </ul>
+
+
+    <ul class="layui-nav fly-nav-user" id="current-account">
+
+    </ul>
+
+  </div>
+</div>
+
+
+
+<!--第一行-->
+<div class="fly-panel fly-column">
+  <div class="layui-container">
+    <ul class="layui-clear">
+      <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+
+      <!-- 用户登入后显示 -->
+      <li id="mysend-port" class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="/user/index.html">我发表的贴</a></li>
+      <li id="myfavorites-port" class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="/user/index.html#collection">我收藏的贴</a></li>
+    </ul>
+
+    <div class="fly-column-right layui-hide-xs">
+      <a href="/jie/add.html" class="layui-btn">发表新帖</a>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="layui-container">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md8">
+
+      <div class="layui-carousel" id="indexCarousel">
+        <div carousel-item="">
+          <div class="bgfff"><img th:src="@{/images/board.jpg}"></div>
+          <div class="bgfff"><img th:src="@{images/dining_hall.jpg}"></div>
+          <div class="bgfff"><img th:src="@{images/lawn.jpg}"></div>
+        </div>
+      </div>
+      <div class="fly-panel" style="margin-bottom: 0;">
+
+        <div class="fly-panel-title fly-filter">
+          <a>精华</a>
+          <span class="fly-filter-right layui-hide-xs">
+            <a href="javascript:;" id="order_new" class="layui-this">按最新</a>
+            <span class="fly-mid"></span>
+            <a href="javascript:;" id="order_replyNum">按热议</a>
+          </span>
+        </div>
+
+        <div class="fly-topic-list" id="indexTopicDisplay" >
+
+        </div>
+
+        <div style="text-align: center">
+          <div class="laypage-main">
+            <a href="/jie/index.html" class="laypage-next">更多内容</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="layui-col-md4">
+
+      <div class="fly-panel">
+        <h3 class="fly-panel-title">校园通道</h3>
+        <ul class="fly-panel-main fly-list-static">
+          <li><a th:href="@{http://scudm.scu.edu.cn/}" target="_blank">四川大学博物馆</a></li>
+          <li><a th:href="@{http://jwc.scu.edu.cn/}" target="_blank">四川大学教务处</a></li>
+          <li><a th:href="@{http://xsc.scu.edu.cn/WEBSITE/XG}" target="_blank">四川大学学工部</a></li>
+          <li><a th:href="@{https://scusport.com/}" target="_blank">四川大学体质测试</a></li>
+          <li><a th:href="@{http://lib.scu.edu.cn/}" target="_blank">四川大学图书馆</a></li>
+          <li><a th:href="@{ http://rsc.scu.edu.cn/}" target="_blank">四川大学人事处</a></li>
+        </ul>
+      </div>
+
+      <div id="user_signcount" class="fly-panel fly-signin">
+        <div class="fly-panel-title">
+          签到
+          <i class="fly-mid"></i>
+          <a href="javascript:;" class="fly-link" id="LAY_signinHelp">说明</a>
+          <!-- <span class="fly-signin-days">已连续签到<cite>0</cite>天</span>-->
+        </div>
+        <div class="fly-panel-main fly-signin-main">
+          <button class="layui-btn layui-btn-danger" id="LAY_signin">今日签到</button>
+          <span>可获得<cite>5</cite>经验值</span>
+
+          <!-- 已签到状态 -->
+          <!--
+          <button class="layui-btn layui-btn-disabled">今日已签到</button>
+          <span>获得了<cite>20</cite>飞吻</span>
+          -->
+        </div>
+      </div>
+
+
+      <div class="fly-panel fly-rank fly-rank-reply" id="LAY_replyRank">
+        <h3 class="fly-panel-title">回贴周榜</h3>
+        <dl id="user_replyPort">
+          <!--<i class="layui-icon fly-loading">&#xe63d;</i>-->
+        </dl>
+      </div>
+
+
+      <div class="fly-panel">
+        <div class="fly-panel-title">公告区</div>
+        <div class="fly-panel-main">
+          业务合作联系邮箱：<br>
+          <b1>tillyandbamboo@163.com</b1><br>
+          <b2>904598749@qq.com</b2>
+          <a th:href="@{#}" target="_blank" class="fly-zanzhu" time-limit="2020.11.15-2099.01.01">川流不息BBS上线啦！</a>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<!--footer-->
+<div class="fly-footer">
+  <p><a th:href="@{#}">川流不息BBS</a> 2020 &copy; <a th:href="@{#}" target="_blank">made by Fly in The Sky Group</a></p>
+</div>
+
+
+<script type="text/javascript" src="layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script>
+  layui.config({
+    version: "3.0.0"
+    ,base: '/js/' //这里实际使用时，建议改成绝对路径
+  }).extend({
+    account: 'AccountCheck',
+    welcome: 'welcome',
+    fly: 'index'
+  }).use(['account','welcome','fly'],function () {
+    if(layui.cache.user.state < 1){
+      layui.$("#mysend-port").remove();
+      layui.$("#myfavorites-port").remove();
+    };
+  });
+
+
+  function logout(){
+    layui.use('layer',function () {
+      var layer = layui.layer
+      layer.confirm('确认退出登录吗?', {icon: 3, title:'退出登录'}, function(index){
+        layer.close(index);
+        window.location.href = '/logout';
+      });
+    })
+
+  }
+
+
+  //注意：导航 依赖 element 模块，否则无法进行功能性操作
+  layui.use('element', function(){
+    var element = layui.element;
+    element.init();
+    indexTopicDisplay();
+    //…
+  });
+  function  indexTopicDisplay(){//这里显示的是所有话题，之后可以改成显示置顶话题
+    layui.$.ajax({
+      url:"/searchAllTopic",
+      type:"post",
+      //dataType:"json",
+      async:false,
+      error:function(res){
+        document.getElementById("indexTopicDisplay").appendChild(layui.$("<div class=\"fly-none\">没有相关数据</div>")[0]);
+      },
+      success:function(res){
+        if(res && res.length>0){
+          console.log(res);
+          console.log(res[0].topicId);
+          var str="<li><a href=\"topic\\{topicId}\">{title}</li>";
+          for(var i=0;i<res.length;i++)
+          {
+           var rt=str.replace(/{topicId}/g,res[i].topicId).replace(/{title}/g,res[i].title);
+           document.getElementById("indexTopicDisplay").appendChild(layui.$(rt)[0]);
+          }
+        }
+        else
+        {
+          document.getElementById("indexTopicDisplay").appendChild(layui.$("<div class=\"fly-none\">没有相关数据</div>")[0]);
+        }
+      }
+    })
+  }
+</script>
+
+</body>
+</html>

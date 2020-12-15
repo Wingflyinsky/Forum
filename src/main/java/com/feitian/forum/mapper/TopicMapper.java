@@ -6,7 +6,9 @@ import java.util.List;
 
 import com.feitian.forum.mapper.extend.TopicExtendMapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface TopicMapper extends TopicExtendMapper {
     long countByExample(TopicExample example);
 

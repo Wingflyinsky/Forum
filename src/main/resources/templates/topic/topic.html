@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>川流不息BBS-四川大学论坛</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="四川大学论坛，校园BBS">
+    <meta name="description" content="四川大学论坛，校园BBS">
+    <link rel="stylesheet" href="/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+    <link rel="stylesheet" href="/css/global.css" th:href="@{/css/global.css}">
+</head>
+<body>
+<div class="fly-header layui-bg-black">
+    <div class="layui-container">
+        <a class="fly-logo" href="/">
+            <img src="images/icon_wave.png" th:src="@{/images/icon_wave.png}" alt="layui"> <b style="font-size:28px">川流不息BBS </b>四川大学校园论坛
+        </a>
+        <ul class="layui-nav fly-nav layui-hide-xs" style="margin-left: 400px">
+            <li class="layui-nav-item">
+                <a th:href="@{#}" target="_blank"><i class="iconfont icon-jiaoliu"></i>发起话题</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="/index.html"><i class="iconfont icon-iconmingxinganli"></i>精华话题</a>
+            </li>
+            <li class="layui-nav-item">
+                <a  th:href="@{http://www.scu.edu.cn/index.htm}" target="_blank"><i class="iconfont icon-ui"></i>川大官网</a>
+            </li>
+        </ul>
+        <ul class="layui-nav fly-nav-user" id="current-account">
+
+            <li class="layui-nav-item">
+            <li class="layui-nav-item">
+                <a href="javascript:;">我的</a>
+                <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                    <dd><a href="">个人巴拉</a></dd>
+                    <dd><a href="">个人巴拉</a></dd>
+                    <dd><a href="">个人巴拉</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+       <!-- <div id="autoScroll8" class="layui-col-md8 content detail">-->
+        <div id="autoScroll8" class="layui-col-md12 content detail">
+            <div class="fly-panel detail-box">
+                <h1 id="htmlTitle"></h1>
+                <div class="fly-panel detail-box">
+                  <div class="detailTopicContent" id="detailTopicContent" >
+                  </div>
+                    <div class="detail-about" id="aboutUser">
+                    </div>
+                <div class="fly-detail-info" id="portHead">
+                </div>
+
+                </div>
+            </div>
+
+            <div class="fly-panel detail-box" id="flyReply">
+
+                <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
+                    <legend>回帖</legend>
+                </fieldset>
+
+                <ul class="jieda" style="margin-bottom: 0px" id="jieda">
+                </ul>
+
+                <div style="text-align: center">
+                    <div class="laypage-main">
+                        <a id="homePaging" title="首页" href="javascript:changePaging('homePaging')" data-id="1">首页</a>
+                        <a id="lastPaging" title="上一页" href="javascript:changePaging('lastPaging')">上一页</a>
+                        <a id="nextPaging" title="下一页" href="javascript:changePaging('nextPaging')" >下一页</a>
+                        <a id="endPaging" title="尾页" href="javascript:changePaging('endPaging')" >尾页</a>
+                        <a id="curPaging" title="当前页" href="javascript:changePaging('curPaging')">0</a>
+                    </div>
+                </div>
+
+                <div class="layui-form layui-form-pane" id="sendReplyHide">
+                    <form action="/api/detailsText/sendReply" method="post">
+                        <div class="layui-form-item layui-form-text">
+                            <a name="detailsText"></a>
+                            <div class="layui-input-block">
+                                <textarea id="L_content" name="detailsText" required lay-verify="required" placeholder="请输入内容"  class="layui-textarea fly-editor" style="height: 150px;"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="L_vercode" class="layui-form-label">人类验证</label>
+                            <div class="layui-input-inline">
+                                <input type="number" id="L_vercode" name="image_code" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="layui-form-mid">
+                                <span id="imgCode" style="color: #c00;"></span>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <input id="classId" type="hidden" name="classId">
+                            <input id="portId" type="hidden" name="portId">
+                            <button class="layui-btn" lay-filter="*" lay-submit>提交回复</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fly-footer">
+    <p><a th:href="@{#}">川流不息BBS</a> 2020 &copy; <a th:href="@{#}" target="_blank">made by Fly in The Sky Group</a></p>
+</div>
+
+</body>
+
+<script src="/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script>
+    //解析windows导航栏中的传的参数
+    var UrlParm = function () {
+        var data, index;
+        (function init() {
+            data = [];
+            index = {};
+            var u = window.location.search.substr(1);
+            if (u != '') {
+                var parms = decodeURIComponent(u).split('&');
+                for (var i = 0, len = parms.length; i < len; i++) {
+                    if (parms[i] != '') {
+                        var p = parms[i].split("=");
+                        if (p.length == 1 || (p.length == 2 && p[1] == '')) {
+                            data.push(['']);
+                            index[p[0]] = data.length - 1;
+                        } else if (typeof (p[0]) == 'undefined' || p[0] == '') {
+                            data[0] = [p[1]];
+                        } else if (typeof (index[p[0]]) == 'undefined') {
+                            data.push([p[1]]);
+                            index[p[0]] = data.length - 1;
+                        } else {
+                            data[index[p[0]]].push(p[1]);
+                        }
+                    }
+                }
+            }
+        })();
+        return {
+            parm: function (o) {
+                try {
+                    return (typeof (o) == 'number' ? data[o][0] : data[index[o]][0]);
+                } catch (e) {
+                }
+            },
+            parmValues: function (o) {
+                try {
+                    return (typeof (o) == 'number' ? data[o] : data[index[o]]);
+                } catch (e) { }
+            },
+            hasParm: function (parmName) {
+                return typeof (parmName) == 'string' ? typeof (index[parmName]) != 'undefined' : false;
+            },
+            parmMap: function () {
+                var map = {};
+                try {
+                    for (var p in index) { map[p] = data[index[p]]; }
+                } catch (e) { }
+                return map;
+            }
+        }
+    } ();
+
+    layui.config({
+        version: "3.0.0"
+        ,base: '/js/' //这里实际使用时，建议改成绝对路径
+    }).extend({
+        account: 'AccountCheck',
+        topicDetails: 'topicPorts',
+        fly: 'index'
+    }).use(['account','topicDetails','fly'],function () {
+        if(layui.cache.user.state <1){
+            layui.$("#mysend-port").remove();
+            layui.$("#myfavorites-port").remove();
+        }
+
+    });
+
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+        element.init();
+
+    });
+</script>
+</html>
+

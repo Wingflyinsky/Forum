@@ -1,8 +1,10 @@
 package com.feitian.forum.domain;
 
+import com.feitian.forum.domain.extend.TopicExtend;
+
 import java.util.Date;
 
-public class Topic {
+public class Topic extends TopicExtend {
     private Long topicId;
 
     private Long userId;

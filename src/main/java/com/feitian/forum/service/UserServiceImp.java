@@ -1,14 +1,11 @@
 package com.feitian.forum.service;
 
-import com.feitian.forum.domain.Admin;
-import com.feitian.forum.domain.AdminExample;
-import com.feitian.forum.domain.User;
-import com.feitian.forum.domain.UserExample;
-import com.feitian.forum.mapper.AdminMapper;
-import com.feitian.forum.mapper.UserMapper;
+import com.feitian.forum.domain.*;
+import com.feitian.forum.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +17,14 @@ public class UserServiceImp implements UserService {
     UserMapper userMapper;
     @Autowired
     AdminMapper adminMapper;
+    @Autowired
+    TopicMapper topicMapper;
+    @Autowired
+    CommentMapper commentMapper;
+    @Autowired
+    ThumbCMapper thumbCMapper;
+    @Autowired
+    ThumbTMapper thumbTMapper;
 
     @Override
     public Map<String,Object> loginCheck(User user) {
@@ -52,5 +57,183 @@ public class UserServiceImp implements UserService {
             return adminList.get(0);
         }
         return null;
+    }
+
+    @Override
+    public String register(User user) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUsernameEqualTo(user.getUsername());
+        List<User> userList = userMapper.selectByExample(userExample);
+        if(userList.size()>0){
+            return "occupied username";
+        }
+        //insertSelective方法在插入数据时，有默认值的为默认值，无默认值的为空值，但不是null
+        userMapper.insertSelective(user);
+        return "success";
+    }
+
+    @Override
+    public List<Topic> searchAllTopic() {
+        TopicExample topicExample = new TopicExample();
+        topicExample.createCriteria().andIsDeletedEqualTo(false);
+        List<Topic> topicList = topicMapper.selectByExample(topicExample);
+        return topicList;
+    }
+
+    @Override
+    public Topic getTopicById(long topicId) {
+        List<Topic> topicList = topicMapper.getTopicById(topicId);
+        if (topicList.size()>0){
+            return topicList.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public String writeNewTopic(Topic topic) {
+        Date now = new Date();
+        topic.setFirstSent(now);
+        topic.setLastModified(now);
+        topicMapper.insertSelective(topic);
+        return "success";
+    }
+
+    @Override
+    public String modifyMyTopic(Topic topic) {
+        TopicExample topicExample = new TopicExample();
+        topicExample.createCriteria().andTopicIdEqualTo(topic.getTopicId()).andIsDeletedEqualTo(false);
+        List<Topic> topicInDB = topicMapper.selectByExample(topicExample);
+        if(topicInDB.size()==0){
+            return "no such topic";
+        }
+        Date now = new Date();
+        topic.setLastModified(now);
+        //按照topicExample选定的元组，以topic中不为null的属性来更新
+        topicMapper.updateByExampleSelective(topic, topicExample);
+        return "success";
+    }
+
+    @Override
+    public String deleteTopic(long topicId) {
+        TopicExample topicExample = new TopicExample();
+        topicExample.createCriteria().andTopicIdEqualTo(topicId).andIsDeletedEqualTo(false);
+        if(topicMapper.selectByExample(topicExample).size()>0){
+            Topic topic = new Topic();
+            topic.setIsDeleted(true);
+            topicMapper.updateByExampleSelective(topic, topicExample);
+            return "success";
+        }
+        else{
+            return "no such topics to delete";
+        }
+    }
+
+    @Override
+    public String writeNewComment(Comment comment) {
+        Date now = new Date();
+        comment.setFirstSent(now);
+        comment.setLastModified(now);
+        commentMapper.insertSelective(comment);
+        return "success";
+    }
+
+    @Override
+    public String modifyMyComment(Comment comment){
+        CommentExample commentExample = new CommentExample();
+        commentExample.createCriteria().andCommentIdEqualTo(comment.getTopicId()).andIsDeletedEqualTo(false);
+        List<Comment> commentInDB = commentMapper.selectByExample(commentExample);
+        if(commentInDB.size()==0){
+        return "no such comment";
+    }
+    Date now = new Date();
+        comment.setLastModified(now);
+        //按照commentExample选定的元组，以comment中不为null的属性来更新
+        commentMapper.updateByExampleSelective(comment, commentExample);
+        return "success";
+    }
+
+    @Override
+    public String deleteComment(long commentId) {
+        CommentExample commentExample = new CommentExample();
+        commentExample.createCriteria().andCommentIdEqualTo(commentId).andIsDeletedEqualTo(false);
+        if(commentMapper.selectByExample(commentExample).size()>0){
+            Comment comment = new Comment();
+            comment.setIsDeleted(true);
+            commentMapper.updateByExampleSelective(comment, commentExample);
+            return "success";
+        }
+        else{
+            return "no such comments to delete";
+        }
+    }
+
+    @Override
+    public boolean ifThumbCed(long userId, long commentId) {
+        ThumbCExample thumbCExample = new ThumbCExample();
+        thumbCExample.createCriteria().andUserIdEqualTo(userId).andCommentIdEqualTo(commentId);
+        List<ThumbC> thumbCs = thumbCMapper.selectByExample(thumbCExample);
+        return thumbCs.size()>0;
+    }
+
+    @Override
+    public boolean ifThumbTed(long userId, long topicId) {
+        ThumbTExample thumbTExample = new ThumbTExample();
+        thumbTExample.createCriteria().andUserIdEqualTo(userId).andTopicIdEqualTo(topicId);
+        List<ThumbT> thumbTs = thumbTMapper.selectByExample(thumbTExample);
+        return thumbTs.size()>0;
+    }
+
+    @Override
+    public void ThumbC(long userId, long commentId) {
+        ThumbCExample thumbCExample = new ThumbCExample();
+        thumbCExample.createCriteria().andUserIdEqualTo(userId).andCommentIdEqualTo(commentId);
+        List<ThumbC> thumbCs = thumbCMapper.selectByExample(thumbCExample);
+        if(thumbCs.size()==0){
+            ThumbC thumbC = new ThumbC();
+            thumbC.setCommentId(commentId);
+            thumbC.setUserId(userId);
+            thumbCMapper.insertSelective(thumbC);
+        }
+        else{
+            thumbCMapper.deleteByPrimaryKey(thumbCs.get(0).getThumbcId());
+        }
+    }
+
+    @Override
+    public void ThumbT(long userId, long topicId) {
+        ThumbTExample thumbTExample = new ThumbTExample();
+        thumbTExample.createCriteria().andUserIdEqualTo(userId).andTopicIdEqualTo(topicId);
+        List<ThumbT> thumbTs = thumbTMapper.selectByExample(thumbTExample);
+        if(thumbTs.size()==0){
+            ThumbT thumbT = new ThumbT();
+            thumbT.setTopicId(topicId);
+            thumbT.setUserId(userId);
+            thumbTMapper.insertSelective(thumbT);
+        }
+        else{
+            thumbTMapper.deleteByPrimaryKey(thumbTs.get(0).getThumbtId());
+        }
+    }
+
+    @Override
+    public List<Topic> getMyTopics(long userId) {
+        User userInDB = userMapper.getMyTopics(userId).get(0);
+        if (userInDB.getMyTopic().size()>0){
+            return userInDB.getMyTopic();
+        }
+        else{
+            return null;
+        }
+    }
+
+    @Override
+    public List<Comment> getMyComments(long userId) {
+        User userInDB = userMapper.getMyComments(userId).get(0);
+        if (userInDB.getMyComment().size()>0){
+            return userInDB.getMyComment();
+        }
+        else{
+            return null;
+        }
     }
 }

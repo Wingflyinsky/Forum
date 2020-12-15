@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>注册</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="java,编程交流社区">
+  <meta name="description" content="java,编程交流社区,襄阳人本地的编程社区">
+  <link rel="stylesheet" href="/res/layui/css/layui.css">
+  <link rel="stylesheet" href="/res/css/global.css">
+</head>
+<body>
+
+<div class="fly-header layui-bg-black">
+  <div class="layui-container">
+    <a class="fly-logo" href="/">
+      <img src="/res/images/logo.png" alt="layui">猿圈社区
+    </a>
+    <ul class="layui-nav fly-nav layui-hide-xs">
+      <li class="layui-nav-item">
+        <a href="https://space.bilibili.com/384704339" target="_blank"><i class="iconfont icon-jiaoliu"></i>交流</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/case/case.html"><i class="iconfont icon-iconmingxinganli"></i>精华</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/address.html" target="_blank"><i class="iconfont icon-ui"></i>地址</a>
+      </li>
+    </ul>
+    
+    <ul class="layui-nav fly-nav-user" id="current-account">
+
+      <li class="layui-nav-item">
+        <a class="fly-nav-avatar" href="javascript:;">
+          <cite class="layui-hide-xs" id="userAlias"></cite>
+          <i class="iconfont icon-renzheng layui-hide-xs" id="authenticate"></i>
+          <i class="layui-badge fly-badge-vip layui-hide-xs" id="vipLevel"></i>
+          <img id="userImg">
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="/user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+          <dd><a href="/user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
+          <dd><a href="/user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+          <hr style="margin: 5px 0;">
+          <dd><a href="/user/cleanAll.html" style="text-align: center;">退出</a></dd>
+        </dl>
+      </li>
+
+
+    </ul>
+  </div>
+</div>
+
+<div class="layui-container fly-marginTop">
+  <div class="fly-panel fly-panel-user" pad20>
+    <div class="layui-tab layui-tab-brief" lay-filter="user">
+      <ul class="layui-tab-title">
+        <li><a href="login.html">登入</a></li>
+        <li class="layui-this">注册</li>
+      </ul>
+      <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+        <div class="layui-tab-item layui-show">
+          <div class="layui-form layui-form-pane">
+            <form method="post" action="/api/register">
+              <div class="layui-form-item">
+                <label for="L_email" class="layui-form-label">用户</label>
+                <div class="layui-input-inline">
+                  <input type="text" id="L_email" maxlength="12" name="account" required lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">小写字母数字6-12</div>
+              </div>
+              <div class="layui-form-item">
+                <label for="L_username" class="layui-form-label">昵称</label>
+                <div class="layui-input-inline">
+                  <input type="text" id="L_username" maxlength="6" name="alias" required lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">唯一标识</div>
+              </div>
+              <div class="layui-form-item">
+                <label for="L_pass" class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                  <input type="password" id="L_pass" maxlength="12" name="password" required lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">字母数字6-12位</div>
+              </div>
+              <div class="layui-form-item">
+                <label for="L_repass" class="layui-form-label">确认密码</label>
+                <div class="layui-input-inline">
+                  <input type="password" id="L_repass" maxlength="12" name="repassword" required lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label for="L_vercode" class="layui-form-label">简易验证</label>
+                <div class="layui-input-inline">
+                  <input type="number" id="L_vercode" name="image_code" maxlength="6" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid">
+                  <span id="imgCode" style="color: #c00;"></span>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <button class="layui-btn" lay-filter="*" lay-submit>立即注册</button>
+              </div>
+              <div class="layui-form-item fly-form-app">
+                <span>或者直接使用社交账号快捷注册</span>
+                <a href="" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-qq" title="QQ登入"></a>
+                <a href="#" onclick="layer.msg('还在开发中', {icon:16, shade: 0.1, time:2000})" class="iconfont icon-weibo" title="微博登入"></a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="fly-footer">
+  <p><a href="/">猿圈社区</a> 2020 &copy; <a href="http://www.kungreat.cn/" target="_blank">kungreat.cn 出品</a></p>
+  <p>
+    <a href="https://github.com/mydreams2018" target="_blank">GITHUB</a>
+    <a href="http://www.beian.miit.gov.cn/" target="_blank">粤ICP备19055569号-1</a>
+    <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
+  </p>
+</div>
+
+<script src="/res/layui/layui.js"></script>
+<script>
+layui.config({
+  version: "3.0.0"
+  ,base: '/res/mods/'
+}).extend({
+  account: 'currentAccount',
+  fly: 'index'
+}).use(['account','fly'],function () {
+  layui.$.ajax({
+    url: "/api/image",
+    type: "get",
+    async: false,
+    success: function (data) {
+      layui.$("#imgCode").text(data);
+    },
+    error: function () {
+      layui.$("#imgCode").text("验证异常");
+    }
+  });
+});
+</script>
+
+</body>
+</html>

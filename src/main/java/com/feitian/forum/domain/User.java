@@ -1,6 +1,8 @@
 package com.feitian.forum.domain;
 
-public class User {
+import com.feitian.forum.domain.extend.UserExtend;
+
+public class User extends UserExtend {
     private Long userId;
 
     private String username;

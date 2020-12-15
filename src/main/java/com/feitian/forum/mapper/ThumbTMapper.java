@@ -4,7 +4,9 @@ import com.feitian.forum.domain.ThumbT;
 import com.feitian.forum.domain.ThumbTExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ThumbTMapper {
     long countByExample(ThumbTExample example);
 

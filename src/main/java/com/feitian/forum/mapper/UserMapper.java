@@ -3,12 +3,14 @@ package com.feitian.forum.mapper;
 import com.feitian.forum.domain.User;
 import com.feitian.forum.domain.UserExample;
 import java.util.List;
+
+import com.feitian.forum.mapper.extend.UserExtendMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserMapper {
+public interface UserMapper extends UserExtendMapper {
     long countByExample(UserExample example);
 
     int deleteByExample(UserExample example);

@@ -4,7 +4,9 @@ import com.feitian.forum.domain.ThumbC;
 import com.feitian.forum.domain.ThumbCExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ThumbCMapper {
     long countByExample(ThumbCExample example);
 

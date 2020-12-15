@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>用户中心</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="java,编程交流社区">
+  <meta name="description" content="java,编程交流社区,襄阳人本地的编程社区">
+  <link rel="stylesheet" href="/res/layui/css/layui.css">
+  <link rel="stylesheet" href="/res/css/global.css">
+</head>
+<body>
+
+<div class="fly-header layui-bg-black">
+  <div class="layui-container">
+    <a class="fly-logo" href="/">
+      <img src="/res/images/logo.png" alt="layui">
+    </a>
+    <ul class="layui-nav fly-nav layui-hide-xs">
+      <li class="layui-nav-item">
+        <a href="https://space.bilibili.com/384704339" target="_blank"><i class="iconfont icon-jiaoliu"></i>交流</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/case/case.html"><i class="iconfont icon-iconmingxinganli"></i>精华</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="/address.html" target="_blank"><i class="iconfont icon-ui"></i>地址</a>
+      </li>
+    </ul>
+    
+    <ul class="layui-nav fly-nav-user" id="current-account">
+
+      <li class="layui-nav-item">
+        <a class="fly-nav-avatar" href="javascript:;">
+          <cite class="layui-hide-xs" id="userAlias"></cite>
+          <i class="iconfont icon-renzheng layui-hide-xs" id="authenticate"></i>
+          <i class="layui-badge fly-badge-vip layui-hide-xs" id="vipLevel"></i>
+          <img id="userImg">
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="/user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+          <dd><a href="/user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
+          <dd><a href="/user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+          <hr style="margin: 5px 0;">
+          <dd><a href="/user/cleanAll.html" style="text-align: center;">退出</a></dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="layui-container fly-marginTop fly-user-main">
+  <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+    <li class="layui-nav-item">
+      <a href="/user/home.html">
+        <i class="layui-icon">&#xe609;</i>
+        我的主页
+      </a>
+    </li>
+    <li class="layui-nav-item layui-this">
+      <a href="/user/index.html">
+        <i class="layui-icon">&#xe612;</i>
+        用户中心
+      </a>
+    </li>
+    <li class="layui-nav-item">
+      <a href="/user/set.html">
+        <i class="layui-icon">&#xe620;</i>
+        基本设置
+      </a>
+    </li>
+    <li class="layui-nav-item">
+      <a href="/user/message.html">
+        <i class="layui-icon">&#xe611;</i>
+        我的消息
+      </a>
+    </li>
+  </ul>
+
+  <div class="site-tree-mobile layui-hide">
+    <i class="layui-icon">&#xe602;</i>
+  </div>
+  <div class="site-mobile-shade"></div>
+  
+  <div class="site-tree-mobile layui-hide">
+    <i class="layui-icon">&#xe602;</i>
+  </div>
+  <div class="site-mobile-shade"></div>
+  
+  
+  <div class="fly-panel fly-panel-user" pad20>
+    <div class="fly-tab-border" style="margin-bottom: 0px">
+      <span>
+        <a href="javascript:changeClassId(1);" class="tab-this">后端</a>
+        <a href="javascript:changeClassId(2);">前端</a>
+        <a href="javascript:changeClassId(3);">数据</a>
+        <a href="javascript:changeClassId(4);">综合</a>
+      </span>
+    </div>
+    <!--
+    <div class="fly-msg" style="margin-top: 15px;">
+      您的邮箱尚未验证，这比较影响您的帐号安全，<a href="activate.html">立即去激活？</a>
+    </div>
+    -->
+    <div class="layui-tab layui-tab-brief" lay-filter="user">
+      <ul class="layui-tab-title" id="LAY_mine">
+        <li data-type="mine-jie" lay-id="index" class="layui-this">我发的帖</li>
+        <li data-type="collection" lay-id="collection">我收藏的帖</li>
+      </ul>
+      <div class="layui-tab-content" style="padding: 20px 0;">
+        <div class="layui-tab-item layui-show">
+          <ul class="mine-view jie-row" id="myPortQuery">
+
+          </ul>
+          <div style="text-align:center" class="layui-hide-xs">
+            <div class="laypage-main">
+              <a id="homePaging" href="javascript:changePaging('homePaging')" data-id="1">首页</a>
+              <a id="lastPaging" href="javascript:changePaging('lastPaging')">上一页</a>
+              <a id="nextPaging" href="javascript:changePaging('nextPaging')" >下一页</a>
+              <a id="endPaging" href="javascript:changePaging('endPaging')" >尾页</a>
+              <a id="curPaging" title="当前页" href="javascript:changePaging('curPaging')">0</a>
+            </div>
+          </div>
+        </div>
+        <div class="layui-tab-item">
+          <ul class="mine-view jie-row" id="myColQuery">
+          </ul>
+          <div style="text-align:center" class="layui-hide-xs">
+            <div class="laypage-main">
+              <a id="homePagingCol" href="javascript:changePagingCol('homePagingCol')" data-id="1">首页</a>
+              <a id="lastPagingCol" href="javascript:changePagingCol('lastPagingCol')">上一页</a>
+              <a id="nextPagingCol" href="javascript:changePagingCol('nextPagingCol')" >下一页</a>
+              <a id="endPagingCol" href="javascript:changePagingCol('endPagingCol')" >尾页</a>
+              <a id="curPagingCol" title="当前页" href="javascript:changePagingCol('curPagingCol')">0</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fly-footer">
+  <p><a href="/">猿圈社区</a> 2020 &copy; <a href="http://www.kungreat.cn/" target="_blank">kungreat.cn 出品</a></p>
+  <p>
+    <a href="https://github.com/mydreams2018" target="_blank">GITHUB</a>
+    <a href="http://www.beian.miit.gov.cn/" target="_blank">粤ICP备19055569号-1</a>
+    <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
+  </p>
+</div>
+
+<script src="/res/layui/layui.js"></script>
+<script>
+// layui.cache.page = 'user';
+var currentPage = 1;
+var currentPageCol = 1;
+var classId = 1;
+layui.config({
+  version: "3.0.0"
+  ,base: '/res/mods/'
+}).extend({
+  account: 'currentAccount',
+  fly: 'index'
+}).use(['account','fly'],function(){
+  if(layui.cache.user.state != 1){
+     window.location.href="/user/login.html";
+  };
+  myReport();
+  myReportCol();
+});
+var str = " <li>\n" +
+        "              <a class=\"jie-title\" href=\"/jie/detail.html?classId={classId}&id={dataId}\" target=\"_blank\">{poreTitle}</a>\n" +
+        "              <i>{createTime}</i>\n" +
+        "              <a class=\"mine-edit\" href=\"/jie/edit.html?classId={classId}&id={dataId}\">编辑</a>\n" +
+        "              <em>{replyNumber}答</em>\n" +
+        "            </li>";
+var strCol = "<li>\n" +
+        "              <a class=\"jie-title\" href=\"/jie/detail.html?classId={classId}&id={dataId}\" target=\"_blank\">{poreTitle}</a>\n" +
+        "              <i>{collectTime}</i>\n" +
+        "    </li>";
+function changePaging(obj){
+  if(document.getElementById(obj).getAttribute("data-id") != currentPage) {
+    currentPage = document.getElementById(obj).getAttribute("data-id");
+    myReport();
+  }
+};
+function changePagingCol(obj){
+  if(document.getElementById(obj).getAttribute("data-id") != currentPageCol) {
+    currentPageCol = document.getElementById(obj).getAttribute("data-id");
+    myReportCol();
+  }
+};
+function myReport(){
+  layui.$.ajax({
+    url: "/api/report/myQueryReport",
+    type: "post",
+    dataType: "json",
+    async: false,
+    data: {
+      "classId":classId,
+      "currentPage":currentPage
+    },
+    error:function(res){
+      layui.layer.msg('服务异常',{shift: 6});
+    },
+    success:function(res){
+      layui.$("#myPortQuery").empty();
+      if(res && res.datas.length > 0){
+        for(var x=0;x<res.datas.length;x++) {
+          var resData = res.datas[x];
+          var rt = str.replace(/{classId}/g,classId).replace(/{dataId}/g,resData.id)
+                  .replace(/{poreTitle}/g,resData.name).replace(/{createTime}/g,resData.createTime)
+                  .replace(/{replyNumber}/g,resData.replyNumber);
+          layui.$("#myPortQuery").append(rt);
+        }
+      }
+      document.getElementById("lastPaging").setAttribute("data-id",res.page.lastPage);
+      document.getElementById("nextPaging").setAttribute("data-id",res.page.nextPage);
+      document.getElementById("endPaging").setAttribute("data-id",res.page.endPage);
+      document.getElementById("curPaging").innerText=res.page.currentPage+'/'+res.page.endPage;
+      currentPage = res.page.currentPage;
+    }
+  });
+};
+function myReportCol(){
+  layui.$.ajax({
+    url: "/api/userCollect/queryReport",
+    type: "post",
+    dataType: "json",
+    async: false,
+    data: {
+      "classId":classId,
+      "currentPage":currentPageCol
+    },
+    error:function(res){
+      layui.layer.msg('服务异常',{shift: 6});
+    },
+    success:function(res){
+      layui.$("#myColQuery").empty();
+      if(res && res.datas.length > 0){
+        for(var x=0;x<res.datas.length;x++) {
+          var resData = res.datas[x];
+          var rt = strCol.replace(/{classId}/g,classId).replace(/{dataId}/g,resData.portId)
+                  .replace(/{poreTitle}/g,resData.portTitle).replace(/{collectTime}/g,resData.collectTime);
+          layui.$("#myColQuery").append(rt);
+        }
+      }
+      document.getElementById("lastPagingCol").setAttribute("data-id",res.page.lastPage);
+      document.getElementById("nextPagingCol").setAttribute("data-id",res.page.nextPage);
+      document.getElementById("endPagingCol").setAttribute("data-id",res.page.endPage);
+      document.getElementById("curPagingCol").innerText=res.page.currentPage+'/'+res.page.endPage;
+      currentPageCol = res.page.currentPage;
+    }
+  });
+};
+function changeClassId(curp){
+  classId = curp;
+  currentPage = 1;
+  currentPageCol = 1;
+  layui.$(".fly-tab-border span a").removeClass("tab-this");
+  layui.$(".fly-tab-border span a:nth-child("+curp+")").addClass("tab-this");
+  myReport();
+  myReportCol();
+};
+</script>
+
+</body>
+</html>

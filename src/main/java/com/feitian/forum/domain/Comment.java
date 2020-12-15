@@ -1,8 +1,10 @@
 package com.feitian.forum.domain;
 
+import com.feitian.forum.domain.extend.CommentExtend;
+
 import java.util.Date;
 
-public class Comment {
+public class Comment extends CommentExtend {
     private Long commentId;
 
     private Long topicId;
