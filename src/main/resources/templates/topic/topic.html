@@ -67,14 +67,16 @@
                 <ul class="jieda" style="margin-bottom: 0px" id="jieda">
                 </ul>
 
-                <div style="text-align: center">
-                    <div class="laypage-main">
-                        <a id="homePaging" title="首页" href="javascript:changePaging('homePaging')" data-id="1">首页</a>
-                        <a id="lastPaging" title="上一页" href="javascript:changePaging('lastPaging')">上一页</a>
-                        <a id="nextPaging" title="下一页" href="javascript:changePaging('nextPaging')" >下一页</a>
-                        <a id="endPaging" title="尾页" href="javascript:changePaging('endPaging')" >尾页</a>
-                        <a id="curPaging" title="当前页" href="javascript:changePaging('curPaging')">0</a>
-                    </div>
+                <div id="topicPage" style="text-align: center">
+<!--                    <div class="laypage-main" id="topicPage">-->
+<!--                        -->
+<!--                        <a id="homePaging" title="首页" href="javascript:changePaging('homePaging')" data-id="1">首页</a>-->
+<!--                        <a id="lastPaging" title="上一页" href="javascript:changePaging('lastPaging')">上一页</a>-->
+<!--                        <a id="nextPaging" title="下一页" href="javascript:changePaging('nextPaging')" >下一页</a>-->
+<!--                        <a id="endPaging" title="尾页" href="javascript:changePaging('endPaging')" >尾页</a>-->
+<!--                        <a id="curPaging" title="当前页" href="javascript:changePaging('curPaging')">0</a>-->
+<!--                        -->
+<!--                    </div>-->
                 </div>
 
                 <div class="layui-form layui-form-pane" id="sendReplyHide">
@@ -114,6 +116,33 @@
 
 <script src="/layui/layui.js" th:src="@{/layui/layui.js}"></script>
 <script>
+
+    layui.config({
+        version: "3.0.0"
+        ,base: '/js/' //这里实际使用时，建议改成绝对路径
+    }).extend({
+        account: 'AccountCheck',
+        topicDetails: 'topicPorts',
+        fly: 'index'
+    }).use(['account','topicDetails','fly'],function () {
+        if(layui.cache.user.state <1){
+            layui.$("#mysend-port").remove();
+            layui.$("#myfavorites-port").remove();
+        }
+
+    });
+
+    function logout(){
+        layui.use('layer',function () {
+            var layer = layui.layer
+            layer.confirm('确认退出登录吗?', {icon: 3, title:'退出登录'}, function(index){
+                layer.close(index);
+                window.location.href = '/logout';
+            });
+        })
+
+    }
+
     //解析windows导航栏中的传的参数
     var UrlParm = function () {
         var data, index;
@@ -166,20 +195,7 @@
         }
     } ();
 
-    layui.config({
-        version: "3.0.0"
-        ,base: '/js/' //这里实际使用时，建议改成绝对路径
-    }).extend({
-        account: 'AccountCheck',
-        topicDetails: 'topicPorts',
-        fly: 'index'
-    }).use(['account','topicDetails','fly'],function () {
-        if(layui.cache.user.state <1){
-            layui.$("#mysend-port").remove();
-            layui.$("#myfavorites-port").remove();
-        }
 
-    });
 
     //注意：导航 依赖 element 模块，否则无法进行功能性操作
     layui.use('element', function(){

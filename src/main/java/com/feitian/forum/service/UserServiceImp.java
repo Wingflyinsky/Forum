@@ -1,6 +1,7 @@
 package com.feitian.forum.service;
 
 import com.feitian.forum.domain.*;
+import com.feitian.forum.domain.extend.CommentExtend;
 import com.feitian.forum.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,9 +82,28 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public Topic getTopicById(long topicId) {
+    public long getNumOfComments(long topicId) {
+        CommentExample commentExample = new CommentExample();
+        commentExample.createCriteria().andTopicIdEqualTo(topicId).andIsDeletedEqualTo(false);
+        return commentMapper.countByExample(commentExample);
+    }
+
+    @Override
+    public Topic getTopicById(long userId,long topicId,int page) {
         List<Topic> topicList = topicMapper.getTopicById(topicId);
         if (topicList.size()>0){
+            topicList.get(0).setThumbTs(getThumbTs(topicId));
+            topicList.get(0).setThumbed(ifThumbTed(userId, topicId));
+            CommentExample commentExample = new CommentExample();
+            commentExample.createCriteria().andTopicIdEqualTo(topicId).andIsDeletedEqualTo(false);
+            topicList.get(0).setNumOfComments(commentMapper.countByExample(commentExample));
+            List<Comment> commentList = commentMapper.getCommentsOfTopic(topicId,(page-1)*10);
+            for(int i=0; i<commentList.size(); i++){
+                Comment temp = commentList.get(i);
+                temp.setThumbCs(getThumbCs(temp.getCommentId()));
+                temp.setThumbed(ifThumbCed(userId, temp.getCommentId()));
+            }
+            topicList.get(0).setComments(commentList);
             return topicList.get(0);
         }
         return null;
@@ -120,6 +140,7 @@ public class UserServiceImp implements UserService {
         if(topicMapper.selectByExample(topicExample).size()>0){
             Topic topic = new Topic();
             topic.setIsDeleted(true);
+            topic.setDeletedByUser(true);
             topicMapper.updateByExampleSelective(topic, topicExample);
             return "success";
         }
@@ -159,12 +180,30 @@ public class UserServiceImp implements UserService {
         if(commentMapper.selectByExample(commentExample).size()>0){
             Comment comment = new Comment();
             comment.setIsDeleted(true);
+            comment.setDeleteByUser(true);
             commentMapper.updateByExampleSelective(comment, commentExample);
             return "success";
         }
         else{
             return "no such comments to delete";
         }
+    }
+
+
+    @Override
+    public int getThumbCs(long commentId) {
+        ThumbCExample thumbCExample = new ThumbCExample();
+        thumbCExample.createCriteria().andCommentIdEqualTo(commentId);
+        Integer thumbCs = commentMapper.getThumbCs(commentId);
+        return  thumbCs;
+    }
+
+    @Override
+    public int getThumbTs(long topicId) {
+        ThumbTExample thumbTExample = new ThumbTExample();
+        thumbTExample.createCriteria().andTopicIdEqualTo(topicId);
+        Integer thumbTs = topicMapper.getThumbTs(topicId);
+        return thumbTs;
     }
 
     @Override
@@ -184,7 +223,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void ThumbC(long userId, long commentId) {
+    public boolean ThumbC(long userId, long commentId) {
         ThumbCExample thumbCExample = new ThumbCExample();
         thumbCExample.createCriteria().andUserIdEqualTo(userId).andCommentIdEqualTo(commentId);
         List<ThumbC> thumbCs = thumbCMapper.selectByExample(thumbCExample);
@@ -193,14 +232,16 @@ public class UserServiceImp implements UserService {
             thumbC.setCommentId(commentId);
             thumbC.setUserId(userId);
             thumbCMapper.insertSelective(thumbC);
+            return true;
         }
         else{
             thumbCMapper.deleteByPrimaryKey(thumbCs.get(0).getThumbcId());
+            return false;
         }
     }
 
     @Override
-    public void ThumbT(long userId, long topicId) {
+    public boolean ThumbT(long userId, long topicId) {
         ThumbTExample thumbTExample = new ThumbTExample();
         thumbTExample.createCriteria().andUserIdEqualTo(userId).andTopicIdEqualTo(topicId);
         List<ThumbT> thumbTs = thumbTMapper.selectByExample(thumbTExample);
@@ -209,9 +250,11 @@ public class UserServiceImp implements UserService {
             thumbT.setTopicId(topicId);
             thumbT.setUserId(userId);
             thumbTMapper.insertSelective(thumbT);
+            return true;
         }
         else{
             thumbTMapper.deleteByPrimaryKey(thumbTs.get(0).getThumbtId());
+            return false;
         }
     }
 

@@ -21,7 +21,9 @@ public class Comment extends CommentExtend {
 
     private Boolean isDeleted;
 
-    public Comment(Long commentId, Long topicId, Long userId, String content, Long floor, Date firstSent, Date lastModified, Boolean isDeleted) {
+    private Boolean deleteByUser;
+
+    public Comment(Long commentId, Long topicId, Long userId, String content, Long floor, Date firstSent, Date lastModified, Boolean isDeleted, Boolean deleteByUser) {
         this.commentId = commentId;
         this.topicId = topicId;
         this.userId = userId;
@@ -30,6 +32,7 @@ public class Comment extends CommentExtend {
         this.firstSent = firstSent;
         this.lastModified = lastModified;
         this.isDeleted = isDeleted;
+        this.deleteByUser = deleteByUser;
     }
 
     public Comment() {
@@ -98,5 +101,13 @@ public class Comment extends CommentExtend {
 
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public Boolean getDeleteByUser() {
+        return deleteByUser;
+    }
+
+    public void setDeleteByUser(Boolean deleteByUser) {
+        this.deleteByUser = deleteByUser;
     }
 }

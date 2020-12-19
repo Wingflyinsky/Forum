@@ -274,22 +274,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util', 'carousel'
           });
         }
       };
-      
-      layui.use('face', function(face){
-        options = options || {};
-        fly.faces = face;
-        $(options.elem).each(function(index){
-          var that = this, othis = $(that), parent = othis.parent();
-          parent.prepend(html);
-          parent.find('.fly-edit span').on('click', function(event){
-            var type = $(this).attr('type');
-            mod[type].call(that, othis, this);
-            if(type === 'face'){
-              event.stopPropagation()
-            }
-          });
-        });
-      });
+
       
     }
 
@@ -327,29 +312,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util', 'carousel'
       var elemUser = $('.fly-nav-user');
       if(layui.cache.user.state == 1 && elemUser[0]){
         console.log(layui.cache.user.alias);
-        // fly.json('/message/nums/', {
-        //   _: new Date().getTime()
-        // }, function(res){
-        //   if(res.status === 0 && res.count > 0){
-        //     var msg = $('<a class="fly-nav-msg" href="javascript:;">'+ res.count +'</a>');
-        //     elemUser.append(msg);
-        //     msg.on('click', function(){
-        //       fly.json('/message/read', {}, function(res){
-        //         if(res.status === 0){
-        //           location.href = '/user/message/';
-        //         }
-        //       });
-        //     });
-        //     layer.tips('你有 '+ res.count +' 条未读消息', msg, {
-        //       tips: 3
-        //       ,tipsMore: true
-        //       ,fixed: true
-        //     });
-        //     msg.on('mouseenter', function(){
-        //       layer.closeAll('tips');
-        //     })
-        //   }
-        // });
+
       }
       return arguments.callee;
     }
@@ -421,14 +384,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util', 'carousel'
   ,elemReply = $('#LAY_replyRank');
 
   if(elemReply[0]){
-    /*
-    fly.json('/top/reply/', {
-      limit: 20
-    }, function(res){
-      var html = laytpl(tplReply).render(res);
-      elemReply.find('dl').html(html);
-    });
-    */
+
   };
 
   //相册

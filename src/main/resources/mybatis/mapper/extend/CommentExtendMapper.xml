@@ -2,7 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.feitian.forum.mapper.CommentMapper">
     <resultMap id="CommentExtendMap" type="com.feitian.forum.domain.Comment" extends="BaseResultMap">
-
+        <association property="commentOwner" javaType="com.feitian.forum.domain.User">
+            <id column="comment_owner_id" jdbcType="BIGINT" property="userId"/>
+            <result column="comment_owner_username"  jdbcType="VARCHAR" property="username"/>
+        </association>
     </resultMap>
 
     <select id="getThumbCs" resultType="java.lang.Integer">
@@ -12,9 +15,11 @@
     </select>
 
     <select id="getCommentsOfTopic" resultMap="CommentExtendMap">
-        select *
-        from public."Comment"
-        where public."Comment".topic_id= #{topicId} and public."Comment".is_deleted = false;
+        select C.*,U.user_id as comment_owner_id,U.username as comment_owner_username
+        from public."Comment" C,public."User" U
+        where C.topic_id= #{topicId} and C.is_deleted = false and C.user_id=U.user_id
+        order by C.floor ASC limit 10 offset #{offset};
     </select>
+
 
 </mapper>

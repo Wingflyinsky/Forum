@@ -21,7 +21,9 @@ public class Topic extends TopicExtend {
 
     private Short pinLevel;
 
-    public Topic(Long topicId, Long userId, String title, String content, Date firstSent, Date lastModified, Boolean isDeleted, Short pinLevel) {
+    private Boolean deletedByUser;
+
+    public Topic(Long topicId, Long userId, String title, String content, Date firstSent, Date lastModified, Boolean isDeleted, Short pinLevel, Boolean deletedByUser) {
         this.topicId = topicId;
         this.userId = userId;
         this.title = title;
@@ -30,6 +32,7 @@ public class Topic extends TopicExtend {
         this.lastModified = lastModified;
         this.isDeleted = isDeleted;
         this.pinLevel = pinLevel;
+        this.deletedByUser = deletedByUser;
     }
 
     public Topic() {
@@ -98,5 +101,13 @@ public class Topic extends TopicExtend {
 
     public void setPinLevel(Short pinLevel) {
         this.pinLevel = pinLevel;
+    }
+
+    public Boolean getDeletedByUser() {
+        return deletedByUser;
+    }
+
+    public void setDeletedByUser(Boolean deletedByUser) {
+        this.deletedByUser = deletedByUser;
     }
 }

@@ -16,5 +16,7 @@ public interface AdminService {
     List<User> showBannedUser();
     List<Topic> showDeletedTopics();
     List<Comment> showDeletedComments();
+    String deleteBadTopic(long topicId);
+    String deleteBadComment(long commentId);
     Statistics Statistics();
 }

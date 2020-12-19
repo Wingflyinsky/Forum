@@ -6,37 +6,15 @@
             <id column="topic_owner_id"  jdbcType="BIGINT" property="userId"/>
             <result column="topic_owner_username" jdbcType="VARCHAR" property="username"/>
         </association>
-        <collection property="comments" ofType="com.feitian.forum.domain.Comment">
-            <constructor>
-                <idArg  column="comment_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-                <arg column="comment_topic_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-                <arg column="comment_user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-                <arg column="comment_content" javaType="java.lang.String" jdbcType="VARCHAR" />
-                <arg column="floor" javaType="java.lang.Long" jdbcType="BIGINT" />
-                <arg column="comment_first-sent" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-                <arg column="comment_last-modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-                <arg column="comment_is_deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
-            </constructor>
-            <association property="commentOwner" javaType="com.feitian.forum.domain.User">
-                <id column="comment_owner_id" jdbcType="BIGINT" property="userId"/>
-                <result column="comment_owner_username"  jdbcType="VARCHAR" property="username"/>
-            </association>
-        </collection>
+
     </resultMap >
 
     <select id="getTopicById" resultMap="TopicExtendMap">
-        select public."Topic".*,public."Comment".comment_id,public."Comment".topic_id as comment_topic_id,public."Comment".user_id as comment_user_id,
-               public."Comment".content as comment_content,public."Comment".floor,public."Comment"."first-sent" as "comment_first-sent",
-               public."Comment"."last-modified" as "comment_last-modified",public."Comment".is_deleted as "comment_is_deleted",
-               UT.user_id as topic_owner_id,UT.username as topic_owner_username,
-               UC.user_id as comment_owner_id,UC.username as comment_owner_username
-        from public."Topic",public."Comment",public."User" UT ,public."User" UC
+        select public."Topic".*,UT.user_id as topic_owner_id,UT.username as topic_owner_username
+        from public."Topic",public."Comment",public."User" UT
         where public."Topic".topic_id = #{topicId}
-          and public."Topic".is_deleted = false
-        and public."Comment".topic_id=public."Topic".topic_id
-        and public."Comment".is_deleted = false
+        and public."Topic".is_deleted = false
         and public."Topic".user_id=UT.user_id
-        and public."Comment".user_id=UC.user_id;
     </select>
 
 

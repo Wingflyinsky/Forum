@@ -604,6 +604,66 @@ public class TopicExample {
             addCriterion("\"pin_level\" not between", value1, value2, "pinLevel");
             return (Criteria) this;
         }
+
+        public Criteria andDeletedByUserIsNull() {
+            addCriterion("\"deleted_by_user\" is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedByUserIsNotNull() {
+            addCriterion("\"deleted_by_user\" is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedByUserEqualTo(Boolean value) {
+            addCriterion("\"deleted_by_user\" =", value, "deletedByUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedByUserNotEqualTo(Boolean value) {
+            addCriterion("\"deleted_by_user\" <>", value, "deletedByUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedByUserGreaterThan(Boolean value) {
+            addCriterion("\"deleted_by_user\" >", value, "deletedByUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedByUserGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("\"deleted_by_user\" >=", value, "deletedByUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedByUserLessThan(Boolean value) {
+            addCriterion("\"deleted_by_user\" <", value, "deletedByUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedByUserLessThanOrEqualTo(Boolean value) {
+            addCriterion("\"deleted_by_user\" <=", value, "deletedByUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedByUserIn(List<Boolean> values) {
+            addCriterion("\"deleted_by_user\" in", values, "deletedByUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedByUserNotIn(List<Boolean> values) {
+            addCriterion("\"deleted_by_user\" not in", values, "deletedByUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedByUserBetween(Boolean value1, Boolean value2) {
+            addCriterion("\"deleted_by_user\" between", value1, value2, "deletedByUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedByUserNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("\"deleted_by_user\" not between", value1, value2, "deletedByUser");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

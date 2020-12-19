@@ -11,6 +11,7 @@
       <arg column="first-sent" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="last-modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="is_deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="delete_by_user" javaType="java.lang.Boolean" jdbcType="BIT" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -73,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List">
     "comment_id", "topic_id", "user_id", "content", "floor", "first-sent", "last-modified", 
-    "is_deleted"
+    "is_deleted", "delete_by_user"
   </sql>
   <select id="selectByExample" parameterType="com.feitian.forum.domain.CommentExample" resultMap="BaseResultMap">
     select
@@ -108,10 +109,12 @@
   <insert id="insert" parameterType="com.feitian.forum.domain.Comment">
     insert into "Comment" ("comment_id", "topic_id", "user_id", 
       "content", "floor", "first-sent", 
-      "last-modified", "is_deleted")
+      "last-modified", "is_deleted", "delete_by_user"
+      )
     values (DEFAULT, #{topicId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
       #{content,jdbcType=VARCHAR}, #{floor,jdbcType=BIGINT}, #{firstSent,jdbcType=TIMESTAMP}, 
-      #{lastModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT})
+      #{lastModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{deleteByUser,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.feitian.forum.domain.Comment">
     insert into "Comment"
@@ -140,6 +143,9 @@
       <if test="isDeleted != null">
         "is_deleted",
       </if>
+      <if test="deleteByUser != null">
+        "delete_by_user",
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="commentId != null">
@@ -165,6 +171,9 @@
       </if>
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="deleteByUser != null">
+        #{deleteByUser,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -201,6 +210,9 @@
       <if test="record.isDeleted != null">
         "is_deleted" = #{record.isDeleted,jdbcType=BIT},
       </if>
+      <if test="record.deleteByUser != null">
+        "delete_by_user" = #{record.deleteByUser,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -215,7 +227,8 @@
       "floor" = #{record.floor,jdbcType=BIGINT},
       "first-sent" = #{record.firstSent,jdbcType=TIMESTAMP},
       "last-modified" = #{record.lastModified,jdbcType=TIMESTAMP},
-      "is_deleted" = #{record.isDeleted,jdbcType=BIT}
+      "is_deleted" = #{record.isDeleted,jdbcType=BIT},
+      "delete_by_user" = #{record.deleteByUser,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -244,6 +257,9 @@
       <if test="isDeleted != null">
         "is_deleted" = #{isDeleted,jdbcType=BIT},
       </if>
+      <if test="deleteByUser != null">
+        "delete_by_user" = #{deleteByUser,jdbcType=BIT},
+      </if>
     </set>
     where "comment_id" = #{commentId,jdbcType=BIGINT}
   </update>
@@ -255,7 +271,8 @@
       "floor" = #{floor,jdbcType=BIGINT},
       "first-sent" = #{firstSent,jdbcType=TIMESTAMP},
       "last-modified" = #{lastModified,jdbcType=TIMESTAMP},
-      "is_deleted" = #{isDeleted,jdbcType=BIT}
+      "is_deleted" = #{isDeleted,jdbcType=BIT},
+      "delete_by_user" = #{deleteByUser,jdbcType=BIT}
     where "comment_id" = #{commentId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.feitian.forum.mapper.extend.UserExtendMapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository

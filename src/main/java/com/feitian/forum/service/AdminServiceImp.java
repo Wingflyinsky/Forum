@@ -123,6 +123,38 @@ public class AdminServiceImp implements AdminService{
     }
 
     @Override
+    public String deleteBadTopic(long topicId) {
+        TopicExample topicExample = new TopicExample();
+        topicExample.createCriteria().andTopicIdEqualTo(topicId).andIsDeletedEqualTo(false);
+        if(topicMapper.selectByExample(topicExample).size()>0){
+            Topic topic = new Topic();
+            topic.setIsDeleted(true);
+            topic.setDeletedByUser(false);
+            topicMapper.updateByExampleSelective(topic, topicExample);
+            return "success";
+        }
+        else{
+            return "no such topics to delete";
+        }
+    }
+
+    @Override
+    public String deleteBadComment(long commentId) {
+        CommentExample commentExample = new CommentExample();
+        commentExample.createCriteria().andCommentIdEqualTo(commentId).andIsDeletedEqualTo(false);
+        if(commentMapper.selectByExample(commentExample).size()>0){
+            Comment comment = new Comment();
+            comment.setIsDeleted(true);
+            comment.setDeleteByUser(false);
+            commentMapper.updateByExampleSelective(comment, commentExample);
+            return "success";
+        }
+        else{
+            return "no such comments to delete";
+        }
+    }
+
+    @Override
     public Statistics Statistics() {
         Statistics stats = new Statistics();
 

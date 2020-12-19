@@ -11,6 +11,7 @@
       <arg column="last-modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="is_deleted" javaType="java.lang.Boolean" jdbcType="BIT" />
       <arg column="pin_level" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="deleted_by_user" javaType="java.lang.Boolean" jdbcType="BIT" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -73,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List">
     "topic_id", "user_id", "title", "content", "first-sent", "last-modified", "is_deleted", 
-    "pin_level"
+    "pin_level", "deleted_by_user"
   </sql>
   <select id="selectByExample" parameterType="com.feitian.forum.domain.TopicExample" resultMap="BaseResultMap">
     select
@@ -108,10 +109,12 @@
   <insert id="insert" parameterType="com.feitian.forum.domain.Topic">
     insert into "Topic" ("topic_id", "user_id", "title", 
       "content", "first-sent", "last-modified", 
-      "is_deleted", "pin_level")
+      "is_deleted", "pin_level", "deleted_by_user"
+      )
     values (DEFAULT, #{userId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR},
       #{content,jdbcType=VARCHAR}, #{firstSent,jdbcType=TIMESTAMP}, #{lastModified,jdbcType=TIMESTAMP}, 
-      #{isDeleted,jdbcType=BIT}, #{pinLevel,jdbcType=SMALLINT})
+      #{isDeleted,jdbcType=BIT}, #{pinLevel,jdbcType=SMALLINT}, #{deletedByUser,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.feitian.forum.domain.Topic">
     insert into "Topic"
@@ -140,6 +143,9 @@
       <if test="pinLevel != null">
         "pin_level",
       </if>
+      <if test="deletedByUser != null">
+        "deleted_by_user",
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="topicId != null">
@@ -165,6 +171,9 @@
       </if>
       <if test="pinLevel != null">
         #{pinLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="deletedByUser != null">
+        #{deletedByUser,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -201,6 +210,9 @@
       <if test="record.pinLevel != null">
         "pin_level" = #{record.pinLevel,jdbcType=SMALLINT},
       </if>
+      <if test="record.deletedByUser != null">
+        "deleted_by_user" = #{record.deletedByUser,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -215,7 +227,8 @@
       "first-sent" = #{record.firstSent,jdbcType=TIMESTAMP},
       "last-modified" = #{record.lastModified,jdbcType=TIMESTAMP},
       "is_deleted" = #{record.isDeleted,jdbcType=BIT},
-      "pin_level" = #{record.pinLevel,jdbcType=SMALLINT}
+      "pin_level" = #{record.pinLevel,jdbcType=SMALLINT},
+      "deleted_by_user" = #{record.deletedByUser,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -244,6 +257,9 @@
       <if test="pinLevel != null">
         "pin_level" = #{pinLevel,jdbcType=SMALLINT},
       </if>
+      <if test="deletedByUser != null">
+        "deleted_by_user" = #{deletedByUser,jdbcType=BIT},
+      </if>
     </set>
     where "topic_id" = #{topicId,jdbcType=BIGINT}
   </update>
@@ -255,7 +271,8 @@
       "first-sent" = #{firstSent,jdbcType=TIMESTAMP},
       "last-modified" = #{lastModified,jdbcType=TIMESTAMP},
       "is_deleted" = #{isDeleted,jdbcType=BIT},
-      "pin_level" = #{pinLevel,jdbcType=SMALLINT}
+      "pin_level" = #{pinLevel,jdbcType=SMALLINT},
+      "deleted_by_user" = #{deletedByUser,jdbcType=BIT}
     where "topic_id" = #{topicId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.feitian.forum.mapper.UserMapper">
     <resultMap id="UserExtendMap" type="com.feitian.forum.domain.User" extends="BaseResultMap">
-        <collection property="myTopics" ofType="com.feitian.forum.domain.Topic">
+        <collection property="myTopic" ofType="com.feitian.forum.domain.Topic">
             <id column="topic_topic_id" jdbcType="BIGINT" property="topicId"/>
             <result column="title"  jdbcType="VARCHAR" property="title"/>
             <result column="topic_content"  jdbcType="VARCHAR" property="content"/>
         </collection>
-        <collection property="myComments" ofType="com.feitian.forum.domain.Comment">
+        <collection property="myComment" ofType="com.feitian.forum.domain.Comment">
             <id column="comment_id" jdbcType="BIGINT" property="commentId"/>
             <result column="comment_topic_id"  jdbcType="VARCHAR" property="topicId"/>
             <result column="comment_content"  jdbcType="VARCHAR" property="content"/>

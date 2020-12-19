@@ -381,7 +381,7 @@ body .layui-edit-face  .layui-layer-content{padding:0; background-color:#fff; co
 .jieda .fly-none{height: 50px; min-height: 0;}
 .jieda .icon-caina{position:absolute; right:10px; top:15px; font-size:60px; color: #58A571;}
 
-.detail-about-reply{padding: 0 0 0 55px; background: none;}
+.detail-about-reply{padding: 0 55px 0 55px; background: none;}
 .detail-about-reply .detail-hits{left: 0; bottom: 0;}
 .detail-about-reply .fly-avatar{left: 0; top: 0;}
 
@@ -402,7 +402,7 @@ body .layui-edit-face  .layui-layer-content{padding:0; background-color:#fff; co
 
 
 .jieda-thumb .jieda-zan:hover{color:#c00}
-.jieda-thumb{padding-left: 1070px;color:#999;cursor:pointer}
+.jieda-thumb{padding-left:98%;color:#999;cursor:pointer}
 .jieda-thumb .icon-zan{font-size: 22px}
 .jieda-thumb span em{font-style: normal;}
 /* 用户中心 */

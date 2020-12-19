@@ -11,17 +11,20 @@ public interface UserService {
     Admin adminCheck(long userId);
     String register(User user);
     List<Topic> searchAllTopic();
-    Topic getTopicById(long topicId);
+    long getNumOfComments(long topicId);
+    Topic getTopicById(long userId,long topicId,int page);
     String writeNewTopic(Topic topic);
     String modifyMyTopic(Topic topic);
     String deleteTopic(long topicId);
     String writeNewComment(Comment comment);
     String modifyMyComment(Comment comment);
     String deleteComment(long commentId);
+    int getThumbCs(long commentId);
+    int getThumbTs(long topicId);
     boolean ifThumbCed(long userId,long commentId);
     boolean ifThumbTed(long userId,long topicId);
-    void ThumbC(long userId,long commentId);
-    void ThumbT(long userId,long topicId);
+    boolean ThumbC(long userId,long commentId);
+    boolean ThumbT(long userId,long topicId);
     List<Topic> getMyTopics(long userId);
     List<Comment> getMyComments(long userId);
 

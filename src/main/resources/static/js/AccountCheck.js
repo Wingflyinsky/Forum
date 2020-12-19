@@ -2,7 +2,7 @@
 layui.define('jquery', function(exports){
 
     var $ = layui.jquery;
-    var currentUser = {
+    var defaultUser = {
         alias: '游客'
         ,state: 0
     };
@@ -67,12 +67,12 @@ layui.define('jquery', function(exports){
                 $('#current-account').empty();
                 $("#current-account").html(guestMenu);/**/
             }
-            layui.cache.user = currentUser;
+            layui.cache.user = data;
         },
         error: function (){
             $('#current-account').empty();
             $("#current-account").html(guestMenu);
-            layui.cache.user = currentUser;
+            layui.cache.user = defaultUser;
         }
     });
 

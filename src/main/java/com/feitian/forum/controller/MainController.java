@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MainController {
@@ -48,8 +49,11 @@ public class MainController {
         User currentUser = (User) userService.loginCheck(user).get("User");
         HttpSession session = request.getSession();
         if (currentUser!=null){
-            session.setAttribute("currentUser", user);
-            session.setAttribute("loginState",(String)userService.loginCheck(user).get("msg"));
+            Map<String,Object> usermap= userService.loginCheck(user);
+            User userInDB = (User) usermap.get("User");
+            user.setUserId(userInDB.getUserId());
+            session.setAttribute("currentUser", userInDB);
+            session.setAttribute("loginState",(String)usermap.get("msg"));
             Admin currentAdmin = userService.adminCheck(currentUser.getUserId());
             if(currentAdmin==null){
                 session.setAttribute("UserType", USER);
@@ -93,7 +97,6 @@ public class MainController {
         Integer currentUserType = (Integer) session.getAttribute("UserType");
 
         /*用于以结构化数据返回前端*/
-
         QueryUserType queryUserType = new QueryUserType("guest", 0);
         if (currentUserType==null){
             return queryUserType;
@@ -141,7 +144,6 @@ public class MainController {
         List<Topic> topicList = userService.searchAllTopic();
         return topicList;
     }
-
 
 
     /*登出*/

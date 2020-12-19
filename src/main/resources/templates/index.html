@@ -163,7 +163,7 @@
     account: 'AccountCheck',
     welcome: 'welcome',
     fly: 'index'
-  }).use(['account','welcome','fly'],function () {
+  }).use(['account','fly'],function () {
     if(layui.cache.user.state < 1){
       layui.$("#mysend-port").remove();
       layui.$("#myfavorites-port").remove();
@@ -202,7 +202,7 @@
       success:function(res){
         if(res && res.length>0){
           console.log(res);
-          console.log(res[0].topicId);
+          //console.log(res[0].topicId);
           var str="<li><a href=\"topic\\{topicId}\">{title}</li>";
           for(var i=0;i<res.length;i++)
           {
